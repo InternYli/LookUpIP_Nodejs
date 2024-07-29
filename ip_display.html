@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Logs</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      .log-entry {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User Logs</h1>
+    <div id="log-container"></div>
+
+    <script>
+      // Function to load and display logs
+      function loadLogs() {
+        // Fetch the log file
+        fetch("User_logs.txt")
+          .then((response) => response.text())
+          .then((data) => {
+            // Split the logs by entries
+            const logEntries = data
+              .split("\n\n")
+              .filter((entry) => entry.trim() !== "");
+            const logContainer = document.getElementById("log-container");
+
+            // Convert each log entry to HTML and append it
+            logEntries.forEach((entry) => {
+              const entryDiv = document.createElement("div");
+              entryDiv.classList.add("log-entry");
+              const lines = entry
+                .split("\n")
+                .map((line) => `<p>${line}</p>`)
+                .join("");
+              entryDiv.innerHTML = lines;
+              logContainer.appendChild(entryDiv);
+            });
+          })
+          .catch((error) => {
+            console.error("Error loading logs:", error);
+          });
+      }
+
+      // Load logs when the page loads
+      window.onload = loadLogs;
+    </script>
+  </body>
+</html>
