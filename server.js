@@ -57,10 +57,25 @@ function getPublicIP(callback) {
     });
 }
 
+// Function to format the date and time
+function formatDate(date) {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  };
+  return date.toLocaleString("en-US", options);
+}
+
 // Function to log access
 function logAccess(localIP, privateIP, publicIP) {
+  const formattedDate = formatDate(new Date());
   const logEntry =
-    `Accessed on: ${new Date().toISOString()}\n` +
+    `Accessed on: ${formattedDate}\n` +
     `User Local IP Address: ${localIP}\n` +
     `Private IP Address: ${privateIP}\n` +
     `Public IP Address: ${publicIP}\n\n`;
